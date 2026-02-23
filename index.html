@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inquiry NetSTAR</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%237c3aed'/><path d='M6 10h20v14H6z' rx='2' fill='%23c4b5fd'/><path d='M6 10l10 8 10-8' stroke='%237c3aed' stroke-width='2' fill='none'/></svg>">
+<link rel="stylesheet" href="https://early.webawesome.com/webawesome@2.0.0-alpha.10/dist/themes/default.css" />
+<script type="module" src="https://early.webawesome.com/webawesome@2.0.0-alpha.10/dist/webawesome.loader.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #00c2ff;
+    --accent2: #0077ff;
+    --green: #00e676;
+    --yellow: #ffd740;
+    --red: #ff5252;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+/* Light Theme */
+body.light-mode {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --border: #e2e8f0;
+  --accent: #0077ff;
+  --accent2: #005ad1;
+  --green: #16a34a;
+  --yellow: #d97706;
+  --red: #dc2626;
+  --text: #0f172a;
+  --muted: #64748b;
+}
+
+/* Smooth transition */
+body {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--accent);
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  header span.sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin-left: 4px;
+    font-family: var(--mono);
+  }
+
+  /* Layout */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    padding: 0 20px 8px;
+    font-family: var(--mono);
+  }
+
+  .step-btn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--muted);
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    position: relative;
+  }
+
+  .step-btn:hover { background: var(--surface2); color: var(--text); }
+
+  .step-btn.active {
+    background: var(--surface2);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+
+  .step-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .step-btn.active .step-num {
+    background: var(--accent2);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 12px 0;
+  }
+
+  /* Main */
+  main {
+    padding: 32px;
+    overflow-y: auto;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .page-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .page-header p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Template Cards */
+  .templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+    gap: 20px;
+  }
+
+  .template-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .template-card:hover {
+    border-color: var(--accent2);
+    transform: translateY(-1px);
+  }
+
+  .card-header {
+    padding: 14px 18px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .card-title {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .tag-green { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.3); }
+  .tag-blue { background: rgba(0,194,255,0.12); color: var(--accent); border: 1px solid rgba(0,194,255,0.3); }
+  .tag-yellow { background: rgba(255,215,64,0.12); color: var(--yellow); border: 1px solid rgba(255,215,64,0.3); }
+  .tag-red { background: rgba(255,82,82,0.12); color: var(--red); border: 1px solid rgba(255,82,82,0.3); }
+
+  .copy-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: var(--mono);
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied { border-color: var(--green); color: var(--green); }
+
+  .template-body {
+    padding: 16px 18px;
+  }
+
+  .email-field {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+    display: flex; gap: 6px;
+  }
+
+  .email-field span { color: var(--text); }
+
+  .email-content {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-family: var(--sans);
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre-wrap;
+    position: relative;
+    margin-top: 10px;
+  }
+
+  .placeholder {
+    color: var(--yellow);
+    background: rgba(255,215,64,0.08);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  /* Editable fields */
+  .editable {
+    background: rgba(0,194,255,0.08);
+    border: 1px dashed rgba(0,194,255,0.4);
+    border-radius: 4px;
+    padding: 2px 6px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 12px;
+    min-width: 80px;
+    display: inline-block;
+    outline: none;
+    cursor: text;
+  }
+
+  .editable:focus {
+    border-style: solid;
+    background: rgba(0,194,255,0.15);
+  }
+
+  /* Step 1 - Forward */
+  .forward-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 640px;
+  }
+
+  /* Step 4 - Teams */
+  .teams-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 640px;
+  }
+
+  .teams-body {
+    padding: 18px;
+  }
+
+  .teams-msg {
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.9;
+    padding: 16px 18px;
+  }
+
+  .url-chip {
+    display: inline-block;
+    background: rgba(0,119,255,0.12);
+    border: 1px solid rgba(0,119,255,0.3);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  .status-chip {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+
+  .status-retained { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.3); }
+  .status-added { background: rgba(0,194,255,0.1); color: var(--accent); border: 1px solid rgba(0,194,255,0.3); }
+  .status-changed { background: rgba(255,215,64,0.1); color: var(--yellow); border: 1px solid rgba(255,215,64,0.3); }
+  .status-removed { background: rgba(255,82,82,0.1); color: var(--red); border: 1px solid rgba(255,82,82,0.3); }
+
+  /* Formatted teams message */
+  .teams-msg-formatted {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-family: var(--sans);
+    font-size: 13px;
+  }
+  .tmsg-line {
+    line-height: 1.5;
+    padding: 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tmsg-gap { height: 10px; }
+  .url-line { gap: 8px; }
+
+  /* Hidden textarea for clean copy */
+  .copy-plain-src {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+  }
+
+  .screenshot-placeholder {
+    margin-top: 14px;
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .screenshot-placeholder input[type="file"] { display: none; }
+
+  .upload-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: var(--mono);
+    transition: all 0.2s;
+  }
+
+  .upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Category handler */
+  .category-handler {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 640px;
+  }
+
+  .category-handler h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .action-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .action-card:hover { border-color: var(--accent2); background: var(--surface2); }
+
+  .action-card .icon { font-size: 22px; margin-bottom: 6px; }
+  .action-card .label { font-size: 13px; font-weight: 600; }
+  .action-card .desc { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* Workflow indicator */
+  .workflow-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 24px;
+    overflow-x: auto;
+  }
+
+  .wf-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .wf-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--mono);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .wf-dot:hover, .wf-dot.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,194,255,0.08);
+  }
+
+  .wf-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .wf-dot.active + .wf-label { color: var(--accent); }
+
+  .wf-arrow {
+    color: var(--border);
+    font-size: 18px;
+    margin: 0 12px;
+    flex-shrink: 0;
+  }
+
+  /* Notification */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  hr.section-sep { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* Action Tabs */
+  .action-tab {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .action-tab:hover { border-color: var(--accent2); color: var(--text); }
+  .action-tab.active { background: var(--accent2); border-color: var(--accent2); color: white; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .templates-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🛡️</div>
+    NetSTAR <span class="sub">// Support Workflow</span>
+  </div>
+
+  <div style="margin-left:auto;">
+    <button id="themeToggle" class="upload-btn" onclick="toggleTheme()" style="font-family: var(--mono);">
+      🌙 Dark Mode
+    </button>
+  </div>
+</header>
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Workflow Steps</div>
+    <button class="step-btn active" onclick="showPage('overview')">
+      <div class="step-num">🏠</div> Overview
+    </button>
+    <div class="sidebar-divider"></div>
+    <button class="step-btn" onclick="showPage('step1')" id="btn-step1">
+      <div class="step-num">1</div> Forward Mail
+    </button>
+    <button class="step-btn" onclick="showPage('step2')" id="btn-step2">
+      <div class="step-num">2</div> Handle Category
+    </button>
+    <button class="step-btn" onclick="showPage('step3')" id="btn-step3">
+      <div class="step-num">3</div> Reply Templates
+    </button>
+    <button class="step-btn" onclick="showPage('step4')" id="btn-step4">
+      <div class="step-num">4</div> Upload to Teams
+    </button>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Overview Page -->
+    <div class="page active" id="page-overview">
+      <div class="page-header">
+        <div class="page-icon" style="background: rgba(0,194,255,0.1);">📋</div>
+        <div>
+          <h1>Inquiry Handling Workflow</h1>
+          <p>Follow the 4-step process for each URL categorization inquiry</p>
+        </div>
+      </div>
+
+      <div class="workflow-bar">
+        <div class="wf-step">
+          <div class="wf-dot" onclick="showPage('step1')">1</div>
+          <span class="wf-label">Forward Mail</span>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-step">
+          <div class="wf-dot" onclick="showPage('step2')">2</div>
+          <span class="wf-label">Handle Category</span>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-step">
+          <div class="wf-dot" onclick="showPage('step3')">3</div>
+          <span class="wf-label">Reply to All</span>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-step">
+          <div class="wf-dot" onclick="showPage('step4')">4</div>
+          <span class="wf-label">Upload to Teams</span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px;">
+        <div class="action-card" onclick="showPage('step1')" style="text-align:left; padding: 18px;">
+          <div style="font-size: 24px; margin-bottom: 8px;">📨</div>
+          <div style="font-weight: 600; margin-bottom: 4px;">Step 1: Forward Mail</div>
+          <div style="font-size: 12px; color: var(--muted);">Acknowledge the inquiry and forward to the team.</div>
+          <div style="margin-top: 12px;"><span class="tag tag-blue">EMAIL</span></div>
+        </div>
+        <div class="action-card" onclick="showPage('step2')" style="text-align:left; padding: 18px;">
+          <div style="font-size: 24px; margin-bottom: 8px;">🔗</div>
+          <div style="font-weight: 600; margin-bottom: 4px;">Step 2: Handle Category</div>
+          <div style="font-size: 12px; color: var(--muted);">Update, add, change, or retain URL category in DB.</div>
+          <div style="margin-top: 12px;"><span class="tag tag-yellow">DB ACTION</span></div>
+        </div>
+        <div class="action-card" onclick="showPage('step3')" style="text-align:left; padding: 18px;">
+          <div style="font-size: 24px; margin-bottom: 8px;">✉️</div>
+          <div style="font-weight: 600; margin-bottom: 4px;">Step 3: Reply Templates</div>
+          <div style="font-size: 12px; color: var(--muted);">Pick the right reply template and fill in the details.</div>
+          <div style="margin-top: 12px;"><span class="tag tag-green">TEMPLATES</span></div>
+        </div>
+        <div class="action-card" onclick="showPage('step4')" style="text-align:left; padding: 18px;">
+          <div style="font-size: 24px; margin-bottom: 8px;">📤</div>
+          <div style="font-weight: 600; margin-bottom: 4px;">Step 4: Teams Upload</div>
+          <div style="font-size: 12px; color: var(--muted);">Log the case in Teams with details + screenshot.</div>
+          <div style="margin-top: 12px;"><span class="tag tag-red">TEAMS</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="page" id="page-step1">
+      <div class="page-header">
+        <div class="page-icon" style="background: rgba(0,119,255,0.15);">📨</div>
+        <div>
+          <h1>Step 1 — Forward Mail</h1>
+          <p>Send this acknowledgment to the team when a new inquiry arrives</p>
+        </div>
+      </div>
+
+      <div class="forward-card">
+        <div class="card-header">
+          <div class="card-title">📨 Forward Email Template <span class="tag tag-blue">FORWARD</span></div>
+          <button class="copy-btn" onclick="copyTemplate('forward-template', this)">📋 Copy</button>
+        </div>
+        <div class="template-body">
+          <strong>To:</strong> incompass_support@netstar-inc.com
+          <div id="forward-template" class="email-content">Hi All,
+
+I will handle this.
+
+Best regards,
+Diovic</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <button class="upload-btn" onclick="showPage('step2')" style="background: var(--accent2); border-color: var(--accent2); color: white; padding: 10px 20px; border-radius: 8px; font-family: var(--sans); font-size: 13px;">Next: Handle Category →</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="page" id="page-step2">
+      <div class="page-header">
+        <div class="page-icon" style="background: rgba(255,215,64,0.15);">🔗</div>
+        <div>
+          <h1>Step 2 — Handle Category / URL</h1>
+          <p>Select the action type — each shows the Teams post template to copy</p>
+        </div>
+      </div>
+
+      <!-- Tab selector -->
+      <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+        <button class="action-tab active" id="tab-added" onclick="switchTab('added')">➕ Added</button>
+        <button class="action-tab" id="tab-changed" onclick="switchTab('changed')">🔄 Changed</button>
+        <button class="action-tab" id="tab-retained" onclick="switchTab('retained')">🔒 Retained</button>
+        <button class="action-tab" id="tab-removed" onclick="switchTab('removed')">🗑️ Removed</button>
+      </div>
+
+      <!-- ADDED -->
+      <div class="tab-panel active" id="panel-added">
+        <div class="teams-card" style="max-width:680px;">
+          <div class="card-header">
+            <div class="card-title">➕ Teams Post — Added Category <span class="tag tag-green">ADDED</span></div>
+            <button class="copy-btn" onclick="copyPlain('s2-added-plain', this)">📋 Copy</button>
+          </div>
+          <div class="teams-body">
+            <div class="teams-msg-formatted">
+              <div class="tmsg-line">Hi All,</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line">We received an inquiry from <strong>Microsoft</strong>; Re: [Customer Dispute] Miscategorized &lt;sadak.com.au&gt; as &lt;Uncategorized&gt;</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line url-line"><span class="url-chip">http://sadak.com.au</span></div>
+              <div class="tmsg-line url-line"><span class="url-chip">sadak.com.au</span> <span class="tag tag-yellow" style="font-size:9px;">uncat</span></div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line">⇒Primary: Dining/Gourmet; <span class="status-chip status-added">added</span></div>
+              <div class="tmsg-line">⇒Tags: Immutable,Disputed; <span class="status-chip status-added">added</span></div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD 17022025 from Microsoft</div>
+              <div class="tmsg-line">-This site is The street food of India.</div>
+            </div>
+            <textarea id="s2-added-plain" class="copy-plain-src" readonly>Hi All,
+
+We received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized <sadak.com.au> as <Uncategorized>
+
+http://sadak.com.au
+sadak.com.au (uncat)
+
+⇒Primary: Dining/Gourmet; added
+⇒Tags: Immutable,Disputed; added
+Comment: Priority 1 STANDARD 17022025 from Microsoft
+-This site is The street food of India.</textarea>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:680px;">
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">ACTION</div>
+              <span class="status-chip status-added">added</span>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">USE WHEN</div>
+              <div style="font-size:12px;">New category/tag is added to URL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHANGED -->
+      <div class="tab-panel" id="panel-changed">
+        <div class="teams-card" style="max-width:680px;">
+          <div class="card-header">
+            <div class="card-title">🔄 Teams Post — Changed Category <span class="tag tag-yellow">CHANGED</span></div>
+            <button class="copy-btn" onclick="copyPlain('s2-changed-plain', this)">📋 Copy</button>
+          </div>
+          <div class="teams-body">
+            <div class="teams-msg-formatted">
+              <div class="tmsg-line">Hi All,</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line">We received an inquiry from <strong>Microsoft</strong>; Re: [Customer Dispute] Miscategorized com-lihaoyi.github.io as ParkedDomains</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line url-line"><span class="url-chip">http://com-lihaoyi.github.io</span></div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line url-line"><span class="url-chip">com-lihaoyi.github.io</span></div>
+              <div class="tmsg-line">Primary: Parked Domains; <span class="status-chip status-changed">changed</span></div>
+              <div class="tmsg-line">Tags: CLReviewed,InTheClear; <span class="status-chip status-changed">changed</span></div>
+              <div class="tmsg-line">⇒Primary: Computing &amp; Internet</div>
+              <div class="tmsg-line">⇒Tags: Immutable,Disputed</div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD 17022025 from Microsoft</div>
+              <div class="tmsg-line">-This site is Scala programming language.</div>
+            </div>
+            <textarea id="s2-changed-plain" class="copy-plain-src" readonly>Hi All,
+
+We received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized com-lihaoyi.github.io as ParkedDomains
+
+http://com-lihaoyi.github.io
+
+com-lihaoyi.github.io
+Primary: Parked Domains; changed
+Tags: CLReviewed,InTheClear; changed
+⇒Primary: Computing & Internet
+⇒Tags: Immutable,Disputed
+Comment: Priority 1 STANDARD 17022025 from Microsoft
+-This site is Scala programming language.</textarea>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:680px;">
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">ACTION</div>
+              <span class="status-chip status-changed">changed</span>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">USE WHEN</div>
+              <div style="font-size:12px;">Existing category/tags are replaced</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RETAINED -->
+      <div class="tab-panel" id="panel-retained">
+        <div class="teams-card" style="max-width:680px;">
+          <div class="card-header">
+            <div class="card-title">🔒 Teams Post — Retained (No Change) <span class="tag tag-blue">RETAINED</span></div>
+            <button class="copy-btn" onclick="copyPlain('s2-retained-plain', this)">📋 Copy</button>
+          </div>
+          <div class="teams-body">
+            <div class="teams-msg-formatted">
+              <div class="tmsg-line">Hi All,</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line">We received an inquiry from <strong>Fortra</strong>; CAS-0010792859 Site mis-categorized</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line url-line"><span class="url-chip">http://archive.org/</span></div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line url-line"><span class="url-chip">archive.org</span></div>
+              <div class="tmsg-line">Primary: Remote Proxies; <span class="status-chip status-retained">retained</span></div>
+              <div class="tmsg-line">Tags: Disputed,Immutable; <span class="status-chip status-retained">retained</span></div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD 02172026 from Fortra</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line">-This site is a remote proxy page.</div>
+            </div>
+            <textarea id="s2-retained-plain" class="copy-plain-src" readonly>Hi All,
+
+We received an inquiry from Fortra; CAS-0010792859 Site mis-categorized
+
+http://archive.org/
+
+archive.org
+Primary: Remote Proxies; retained
+Tags: Disputed,Immutable; retained
+Comment: Priority 1 STANDARD 02172026 from Fortra
+
+-This site is a remote proxy page.</textarea>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:680px;">
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">ACTION</div>
+              <span class="status-chip status-retained">retained</span>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">USE WHEN</div>
+              <div style="font-size:12px;">Category is correct, no change made</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REMOVED -->
+      <div class="tab-panel" id="panel-removed">
+        <div class="teams-card" style="max-width:680px;">
+          <div class="card-header">
+            <div class="card-title">🗑️ Teams Post — Removed (Security/Malicious) <span class="tag tag-red">REMOVED</span></div>
+            <button class="copy-btn" onclick="copyPlain('s2-removed-plain', this)">📋 Copy</button>
+          </div>
+          <div class="teams-body">
+            <div class="teams-msg-formatted">
+              <div class="tmsg-line">Hi All,</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line">We received an inquiry from <strong>Zorus</strong>: Miscat</div>
+              <div class="tmsg-gap"></div>
+              <div class="tmsg-line url-line"><span class="url-chip">camilastexmex.com</span></div>
+              <div class="tmsg-line">Primary: Dining/Gourmet; <span class="status-chip status-retained">retained</span></div>
+              <div class="tmsg-line">Tags: CLReviewed,InTheClear; <span class="status-chip status-changed">changed</span></div>
+              <div class="tmsg-line">Security: Suspicious; <span class="status-chip status-removed">removed</span></div>
+              <div class="tmsg-line">⇒Tags: Disputed,Immutable</div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD 02172026 from Zorus</div>
+              <div class="tmsg-line">-This site is a Mexican Restaurant.</div>
+            </div>
+            <textarea id="s2-removed-plain" class="copy-plain-src" readonly>Hi All,
+
+We received an inquiry from Zorus: Miscat
+
+camilastexmex.com
+Primary: Dining/Gourmet; retained
+Tags: CLReviewed,InTheClear; changed
+Security: Suspicious; removed
+⇒Tags: Disputed,Immutable
+Comment: Priority 1 STANDARD 02172026 from Zorus
+-This site is a Mexican Restaurant.</textarea>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:680px;">
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">ACTION</div>
+              <span class="status-chip status-removed">removed</span>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin-bottom:4px;">USE WHEN</div>
+              <div style="font-size:12px;">Malicious / Security tag is removed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; gap: 10px;">
+        <button class="upload-btn" onclick="showPage('step1')" style="padding: 10px 20px; border-radius: 8px; font-family: var(--sans); font-size: 13px;">← Back</button>
+        <button class="upload-btn" onclick="showPage('step3')" style="background: var(--accent2); border-color: var(--accent2); color: white; padding: 10px 20px; border-radius: 8px; font-family: var(--sans); font-size: 13px;">Next: Reply Templates →</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="page" id="page-step3">
+      <div class="page-header">
+        <div class="page-icon" style="background: rgba(0,230,118,0.15);">✉️</div>
+        <div>
+          <h1>Step 3 — Reply to All (Templates)</h1>
+          <p>Select the appropriate template, fill in details, then copy and send</p>
+        </div>
+      </div>
+
+      <div class="templates-grid">
+
+        <!-- Template 1: Updated / Add -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">✏️ Updated / Add <span class="tag tag-green">UPDATED</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-updated', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-updated" class="email-content">Dear <span class="placeholder">[Name]</span>,
+
+Thank you for your inquiry. We have updated the category of the URL you submitted.
+
+Please wait for the new database, including the changes that we have made, to be loaded by your system.
+
+We appreciate your cooperation.
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+        <!-- Template 2: Updated with Category -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">✏️ Updated w/ Category <span class="tag tag-green">UPDATED</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-updated-cat', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-updated-cat" class="email-content">Dear <span class="placeholder">[Name]</span>,
+
+Thank you for your inquiry. We have updated the category of the URL you submitted to <span class="placeholder">[Category Name]</span>.
+
+Please wait for the new database, including the changes that we have made, to be loaded by your system.
+
+We appreciate your cooperation.
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+        <!-- Template 3: Changed / Retained -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">🔄 Changed / Retained / Updated <span class="tag tag-yellow">CHANGED</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-changed', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-changed" class="email-content">Dear <span class="placeholder">[Name]</span>,
+
+Thank you for the inquiry. We have changed (added) the category of the URL that you have submitted and changed its category into <span class="placeholder">[Category]</span>.
+
+Please wait for the new database, including the changes that we have made, to be loaded by your system.
+
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+        <!-- Template 4: Checking / Correct -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">🔍 Checking (Correctly Categorized) <span class="tag tag-blue">CHECKING</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-check', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-check" class="email-content">Dear <span class="placeholder">[Name]</span>,
+
+Thank you for the inquiry. We checked the URL that you have submitted and it is correctly categorized as <span class="placeholder">"[Category Name]"</span> respectively here on our DB with the DB Version: <span class="placeholder">FC:[YYYYMMDD##]</span>.
+
+Is it possible that maybe there's a mapping inconsistency within your system? Please kindly contact your Microsoft internal support team.
+
+We hope this helps.
+Please just let us know if we can be of any further assistance.
+
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+        <!-- Template 5: Remove Malicious -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">🗑️ Remove Malicious Category <span class="tag tag-red">MALICIOUS</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-malicious', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-malicious" class="email-content">Dear <span class="placeholder">[Client Name]</span>,
+
+Thank you for the inquiry. We have removed the Malicious category of the URL that you have submitted and updated into <span class="placeholder">[New Category]</span>.
+
+Please wait for the new database, including the changes that we have made, to be loaded by your system.
+
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+        <!-- Template 6: URL Dispute - Correct in GD -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">📊 URL Dispute — Correct in GD <span class="tag tag-blue">DISPUTE</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-dispute-gd', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-dispute-gd" class="email-content">Dear <span class="placeholder">[Name]</span>,
+
+We confirmed this URL is categorized as <span class="placeholder">[Category Name]</span> in our DB.
+
+Can you please confirm the database is the latest.
+DB Version: FC:<span class="placeholder">[YYYYMMDD##]</span>
+
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+        <!-- Template 7: URL Dispute - No Change -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">🚫 URL Dispute — No Change <span class="tag tag-yellow">NO CHANGE</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-dispute-nc', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-dispute-nc" class="email-content">Dear <span class="placeholder">[Name]</span>,
+
+Thank you for the inquiry.
+
+This site is <span class="placeholder">[your explanation]</span>.
+
+So we believe the categorization is correct.
+
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+        <!-- Template 8: Both URLs with DB Version -->
+        <div class="template-card">
+          <div class="card-header">
+            <div class="card-title">🔍 Both URLs w/ DB Version <span class="tag tag-blue">MULTI-URL</span></div>
+            <button class="copy-btn" onclick="copyTemplateById('tpl-both', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div id="tpl-both" class="email-content">Dear <span class="placeholder">[Name]</span>,
+
+Thank you for the inquiry. We checked the URLs that you have submitted and both URLs are correctly categorized as <span class="placeholder">"[Category Name]"</span> in DB Version: FC:<span class="placeholder">[YYYYMMDD##]</span>.
+
+Is it possible that maybe there's a mapping inconsistency within your system? Please kindly contact your Microsoft internal support team.
+
+We hope this helps.
+Please just let us know if we can be of any further assistance.
+
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+          </div>
+        </div>
+
+      </div><!-- end templates-grid -->
+
+      <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <button class="upload-btn" onclick="showPage('step2')" style="padding: 10px 20px; border-radius: 8px; font-family: var(--sans); font-size: 13px;">← Back</button>
+        <button class="upload-btn" onclick="showPage('step4')" style="background: var(--accent2); border-color: var(--accent2); color: white; padding: 10px 20px; border-radius: 8px; font-family: var(--sans); font-size: 13px;">Next: Upload to Teams →</button>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="page" id="page-step4">
+      <div class="page-header">
+        <div class="page-icon" style="background: rgba(255,82,82,0.15);">📤</div>
+        <div>
+          <h1>Step 4 — Upload to Teams</h1>
+          <p>Post inquiry log in the URL Support channel with screenshot</p>
+        </div>
+      </div>
+
+      <div class="teams-card">
+        <div class="card-header">
+          <div class="card-title">💬 Teams Message Template <span class="tag tag-red">TEAMS</span></div>
+          <button class="copy-btn" onclick="copyTemplateById('teams-template', this)">📋 Copy</button>
+        </div>
+        <div class="teams-body">
+          <div id="teams-template" class="teams-msg">Hi All,<br><br>
+We received an inquiry from <span class="placeholder">[Client Name e.g. Checkpoint]</span>; <span class="placeholder">[Request Type e.g. Categorization change request]</span><br><br>
+<span class="url-chip">http://adnpbs.com</span><br>
+<span class="url-chip">adnpbs.com</span><br><br>
+Primary: <span class="placeholder">[Category]</span>; <span class="status-chip status-retained">retained</span><br>
+⇒ Tags: <span class="placeholder">[Tags e.g. Disputed, Immutable]</span>; <span class="status-chip status-added">added</span><br>
+Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Checkpoint]</span><br>
+- <span class="placeholder">[Brief explanation e.g. This site is a server-to-server proxy.]</span>
+          </div>
+
+          <hr class="section-sep">
+
+          <div style="font-size: 12px; color: var(--muted); font-family: var(--mono); margin-bottom: 10px;">// SCREENSHOT ATTACHMENT</div>
+
+          <div class="screenshot-placeholder" id="screenshot-zone" ondrop="dropHandler(event)" ondragover="dragOver(event)">
+            <span style="font-size: 28px;">📸</span>
+            <span>Drag & drop screenshot here or click to upload</span>
+            <label class="upload-btn">
+              Choose File
+              <input type="file" accept="image/*" onchange="handleFileUpload(event)">
+            </label>
+            <span id="file-name" style="font-size: 11px; color: var(--accent); font-family: var(--mono);"></span>
+          </div>
+
+          <div id="screenshot-preview" style="display:none; margin-top: 10px;">
+            <img id="preview-img" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+            <button onclick="clearScreenshot()" style="margin-top: 8px; background: none; border: 1px solid var(--red); color: var(--red); padding: 4px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-family: var(--mono);">✕ Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sample entry reference -->
+      <div style="margin-top: 20px;">
+        <div style="font-size: 12px; color: var(--muted); font-family: var(--mono); margin-bottom: 10px;">// EXAMPLE ENTRY (Reference)</div>
+        <div class="teams-card">
+          <div class="card-header">
+            <div class="card-title" style="color: var(--muted);">📎 Sample Teams Post</div>
+            <span class="tag tag-blue">EXAMPLE</span>
+          </div>
+          <div class="teams-body">
+            <div class="teams-msg">
+              Hi All,<br><br>
+              We received an inquiry from <strong>Checkpoint</strong>; Categorization change request<br><br>
+              <span class="url-chip">http://adnpbs.com</span><br>
+              <span class="url-chip">adnpbs.com</span><br><br>
+              Primary: Remote Proxies; <span class="status-chip status-retained">retained</span><br>
+              ⇒ Tags: Disputed, Immutable; <span class="status-chip status-added">added</span><br>
+              Comment: Priority 1 STANDARD 11092025 from Checkpoint<br>
+              - This site is a server-to-server proxy.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <button class="upload-btn" onclick="showPage('step3')" style="padding: 10px 20px; border-radius: 8px; font-family: var(--sans); font-size: 13px;">← Back</button>
+        <button class="upload-btn" onclick="markDone()" style="background: var(--green); border-color: var(--green); color: #0a1a0a; font-weight: 600; padding: 10px 20px; border-radius: 8px; font-family: var(--sans); font-size: 13px;">✔ Mark as Done</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">✓ Copied to clipboard!</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const btn = document.getElementById('btn-' + id);
+    if (btn) btn.classList.add('active');
+    // Also deactivate overview btn if needed
+    if (id === 'overview') {
+      document.querySelectorAll('.step-btn')[0].classList.add('active');
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = '✓ ' + (msg || 'Copied to clipboard!');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  function copyTemplate(id, btn) {
+    const el = document.getElementById(id);
+    navigator.clipboard.writeText(el.innerText).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      showToast();
+      setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function copyTemplateById(id, btn) {
+    copyTemplate(id, btn);
+  }
+
+  function copyPlain(id, btn) {
+    const el = document.getElementById(id);
+    navigator.clipboard.writeText(el.value).then(() => {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      showToast('Copied to clipboard!');
+      setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function copyField(id) {
+    const el = document.getElementById(id);
+    navigator.clipboard.writeText(el.value).then(() => showToast('URL copied!'));
+  }
+
+  function switchTab(name) {
+    document.querySelectorAll('.action-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  function highlightAction(el, type) {
+    document.querySelectorAll('.action-card').forEach(c => {
+      c.style.borderColor = 'var(--border)';
+      c.style.background = 'var(--bg)';
+    });
+    el.style.borderColor = 'var(--accent)';
+    el.style.background = 'var(--surface2)';
+    showToast('Action selected: ' + type);
+  }
+
+  function handleFileUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    document.getElementById('file-name').textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      document.getElementById('preview-img').src = ev.target.result;
+      document.getElementById('screenshot-preview').style.display = 'block';
+      document.getElementById('screenshot-zone').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearScreenshot() {
+    document.getElementById('screenshot-preview').style.display = 'none';
+    document.getElementById('screenshot-zone').style.display = 'flex';
+    document.getElementById('file-name').textContent = '';
+    document.getElementById('preview-img').src = '';
+  }
+
+  function dropHandler(e) {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      document.getElementById('preview-img').src = ev.target.result;
+      document.getElementById('screenshot-preview').style.display = 'block';
+      document.getElementById('screenshot-zone').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function dragOver(e) { e.preventDefault(); }
+
+  function markDone() {
+    showToast('Case marked as done! 🎉');
+    setTimeout(() => showPage('overview'), 500);
+  }
+ function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById("themeToggle");
+
+    body.classList.toggle("light-mode");
+
+    if (body.classList.contains("light-mode")) {
+      btn.innerText = "☀️ Light Mode";
+      localStorage.setItem("theme", "light");
+    } else {
+      btn.innerText = "🌙 Dark Mode";
+      localStorage.setItem("theme", "dark");
+    }
+  }
+
+  // Load saved theme on page load
+  window.addEventListener("DOMContentLoaded", function () {
+    const savedTheme = localStorage.getItem("theme");
+    const btn = document.getElementById("themeToggle");
+
+    if (savedTheme === "light") {
+      document.body.classList.add("light-mode");
+      btn.innerText = "☀️ Light Mode";
+    } else {
+      btn.innerText = "🌙 Dark Mode";
+    }
+  });	
+</script>
+</body>
+</html>
