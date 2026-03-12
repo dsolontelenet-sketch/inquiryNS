@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +25,6 @@
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
   }
-/* Light Theme */
 body.light-mode {
   --bg: #f8fafc;
   --surface: #ffffff;
@@ -39,7 +39,6 @@ body.light-mode {
   --muted: #64748b;
 }
 
-/* Smooth transition */
 body {
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -56,7 +55,6 @@ body {
     min-height: 100vh;
   }
 
-  /* Header */
   header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -94,14 +92,37 @@ body {
     font-family: var(--mono);
   }
 
-  /* Layout */
+  /* TODAY DATE BADGE */
+  .date-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .date-badge .date-label { color: var(--muted); margin-right: 2px; }
+  .date-badge .date-copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 0 2px;
+    transition: color 0.2s;
+  }
+  .date-badge .date-copy-btn:hover { color: var(--accent); }
+
   .layout {
     display: grid;
     grid-template-columns: 240px 1fr;
     min-height: calc(100vh - 57px);
   }
 
-  /* Sidebar */
   .sidebar {
     background: var(--surface);
     border-right: 1px solid var(--border);
@@ -167,7 +188,6 @@ body {
     margin: 12px 0;
   }
 
-  /* Main */
   main {
     padding: 32px;
     overflow-y: auto;
@@ -202,7 +222,6 @@ body {
     margin-top: 2px;
   }
 
-  /* Template Cards */
   .templates-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
@@ -251,6 +270,7 @@ body {
   .tag-blue { background: rgba(0,194,255,0.12); color: var(--accent); border: 1px solid rgba(0,194,255,0.3); }
   .tag-yellow { background: rgba(255,215,64,0.12); color: var(--yellow); border: 1px solid rgba(255,215,64,0.3); }
   .tag-red { background: rgba(255,82,82,0.12); color: var(--red); border: 1px solid rgba(255,82,82,0.3); }
+  .tag-purple { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
 
   .copy-btn {
     background: none;
@@ -307,7 +327,6 @@ body {
     font-size: 12px;
   }
 
-  /* Editable fields */
   .editable {
     background: rgba(0,194,255,0.08);
     border: 1px dashed rgba(0,194,255,0.4);
@@ -327,7 +346,6 @@ body {
     background: rgba(0,194,255,0.15);
   }
 
-  /* Step 1 - Forward */
   .forward-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -336,7 +354,6 @@ body {
     max-width: 640px;
   }
 
-  /* Step 4 - Teams */
   .teams-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -387,7 +404,6 @@ body {
   .status-changed { background: rgba(255,215,64,0.1); color: var(--yellow); border: 1px solid rgba(255,215,64,0.3); }
   .status-removed { background: rgba(255,82,82,0.1); color: var(--red); border: 1px solid rgba(255,82,82,0.3); }
 
-  /* Formatted teams message */
   .teams-msg-formatted {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -407,7 +423,6 @@ body {
   .tmsg-gap { height: 10px; }
   .url-line { gap: 8px; }
 
-  /* Hidden textarea for clean copy */
   .copy-plain-src {
     position: absolute;
     opacity: 0;
@@ -446,7 +461,6 @@ body {
 
   .upload-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Category handler */
   .category-handler {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -485,7 +499,6 @@ body {
   .action-card .label { font-size: 13px; font-weight: 600; }
   .action-card .desc { font-size: 11px; color: var(--muted); margin-top: 3px; }
 
-  /* Workflow indicator */
   .workflow-bar {
     display: flex;
     align-items: center;
@@ -536,7 +549,6 @@ body {
     flex-shrink: 0;
   }
 
-  /* Notification */
   .toast {
     position: fixed;
     bottom: 24px;
@@ -560,7 +572,6 @@ body {
 
   hr.section-sep { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
-  /* Action Tabs */
   .action-tab {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -579,6 +590,17 @@ body {
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
+  /* Inline date highlight in templates */
+  .date-highlight {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 12px;
+    background: rgba(0,194,255,0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,194,255,0.25);
+  }
+
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; }
     .sidebar { display: none; }
@@ -594,12 +616,20 @@ body {
     NetSTAR <span class="sub">// Support Workflow</span>
   </div>
 
+  <!-- TODAY'S DATE BADGE -->
+  <div class="date-badge" title="Today's date — used in Comment timestamps">
+    <span class="date-label">📅 Today:</span>
+    <span id="header-date-display" style="font-weight:600;"></span>
+    <button class="date-copy-btn" onclick="copyTodayDate(this)" title="Copy date stamp">📋</button>
+  </div>
+
   <div style="margin-left:auto;">
     <button id="themeToggle" class="upload-btn" onclick="toggleTheme()" style="font-family: var(--mono);">
       🌙 Dark Mode
     </button>
   </div>
 </header>
+
 <div class="layout">
   <!-- Sidebar -->
   <aside class="sidebar">
@@ -752,20 +782,10 @@ Diovic</div>
               <div class="tmsg-gap"></div>
               <div class="tmsg-line">⇒Primary: Dining/Gourmet; <span class="status-chip status-added">added</span></div>
               <div class="tmsg-line">⇒Tags: Immutable,Disputed; <span class="status-chip status-added">added</span></div>
-              <div class="tmsg-line">Comment: Priority 1 STANDARD 17022025 from Microsoft</div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-added-date"></span> from Microsoft</div>
               <div class="tmsg-line">-This site is The street food of India.</div>
             </div>
-            <textarea id="s2-added-plain" class="copy-plain-src" readonly>Hi All,
-
-We received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized <sadak.com.au> as <Uncategorized>
-
-http://sadak.com.au
-sadak.com.au (uncat)
-
-⇒Primary: Dining/Gourmet; added
-⇒Tags: Immutable,Disputed; added
-Comment: Priority 1 STANDARD 17022025 from Microsoft
--This site is The street food of India.</textarea>
+            <textarea id="s2-added-plain" class="copy-plain-src" readonly></textarea>
           </div>
         </div>
         <div style="margin-top:14px;">
@@ -802,22 +822,10 @@ Comment: Priority 1 STANDARD 17022025 from Microsoft
               <div class="tmsg-line">Tags: CLReviewed,InTheClear; <span class="status-chip status-changed">changed</span></div>
               <div class="tmsg-line">⇒Primary: Computing &amp; Internet</div>
               <div class="tmsg-line">⇒Tags: Immutable,Disputed</div>
-              <div class="tmsg-line">Comment: Priority 1 STANDARD 17022025 from Microsoft</div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-changed-date"></span> from Microsoft</div>
               <div class="tmsg-line">-This site is Scala programming language.</div>
             </div>
-            <textarea id="s2-changed-plain" class="copy-plain-src" readonly>Hi All,
-
-We received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized com-lihaoyi.github.io as ParkedDomains
-
-http://com-lihaoyi.github.io
-
-com-lihaoyi.github.io
-Primary: Parked Domains; changed
-Tags: CLReviewed,InTheClear; changed
-⇒Primary: Computing & Internet
-⇒Tags: Immutable,Disputed
-Comment: Priority 1 STANDARD 17022025 from Microsoft
--This site is Scala programming language.</textarea>
+            <textarea id="s2-changed-plain" class="copy-plain-src" readonly></textarea>
           </div>
         </div>
         <div style="margin-top:14px;">
@@ -852,22 +860,11 @@ Comment: Priority 1 STANDARD 17022025 from Microsoft
               <div class="tmsg-line url-line"><span class="url-chip">archive.org</span></div>
               <div class="tmsg-line">Primary: Remote Proxies; <span class="status-chip status-retained">retained</span></div>
               <div class="tmsg-line">Tags: Disputed,Immutable; <span class="status-chip status-retained">retained</span></div>
-              <div class="tmsg-line">Comment: Priority 1 STANDARD 02172026 from Fortra</div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-retained-date"></span> from Fortra</div>
               <div class="tmsg-gap"></div>
               <div class="tmsg-line">-This site is a remote proxy page.</div>
             </div>
-            <textarea id="s2-retained-plain" class="copy-plain-src" readonly>Hi All,
-
-We received an inquiry from Fortra; CAS-0010792859 Site mis-categorized
-
-http://archive.org/
-
-archive.org
-Primary: Remote Proxies; retained
-Tags: Disputed,Immutable; retained
-Comment: Priority 1 STANDARD 02172026 from Fortra
-
--This site is a remote proxy page.</textarea>
+            <textarea id="s2-retained-plain" class="copy-plain-src" readonly></textarea>
           </div>
         </div>
         <div style="margin-top:14px;">
@@ -902,20 +899,10 @@ Comment: Priority 1 STANDARD 02172026 from Fortra
               <div class="tmsg-line">Tags: CLReviewed,InTheClear; <span class="status-chip status-changed">changed</span></div>
               <div class="tmsg-line">Security: Suspicious; <span class="status-chip status-removed">removed</span></div>
               <div class="tmsg-line">⇒Tags: Disputed,Immutable</div>
-              <div class="tmsg-line">Comment: Priority 1 STANDARD 02172026 from Zorus</div>
+              <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-removed-date"></span> from Zorus</div>
               <div class="tmsg-line">-This site is a Mexican Restaurant.</div>
             </div>
-            <textarea id="s2-removed-plain" class="copy-plain-src" readonly>Hi All,
-
-We received an inquiry from Zorus: Miscat
-
-camilastexmex.com
-Primary: Dining/Gourmet; retained
-Tags: CLReviewed,InTheClear; changed
-Security: Suspicious; removed
-⇒Tags: Disputed,Immutable
-Comment: Priority 1 STANDARD 02172026 from Zorus
--This site is a Mexican Restaurant.</textarea>
+            <textarea id="s2-removed-plain" class="copy-plain-src" readonly></textarea>
           </div>
         </div>
         <div style="margin-top:14px;">
@@ -1119,6 +1106,45 @@ incompass_support@netstar-inc.com</div>
           </div>
         </div>
 
+        <!-- Template 9: Multiple URLs Updated (NEW) -->
+        <div class="template-card" style="border-color: rgba(167,139,250,0.4);">
+          <div class="card-header" style="background: rgba(167,139,250,0.06);">
+            <div class="card-title">🔗 Multiple URLs Updated <span class="tag tag-purple">MULTI-UPDATE</span></div>
+            <button class="copy-btn" onclick="copyPlain('tpl-multi-plain', this)">📋 Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="email-content" style="border-color: rgba(167,139,250,0.25);">Dear <span class="placeholder">[Name]</span>,
+
+Thank you for the inquiry. We have updated the categories of the URLs that you have submitted into the following:
+
+<span class="placeholder">mydrive.effem.com</span>  - <span class="placeholder">Computing &amp; Internet</span>
+<span class="placeholder">eqrco.de</span> - <span class="placeholder">Shopping/Retail</span>
+<span class="placeholder">youtube.com</span> - <span class="placeholder">Youtube</span>
+<span class="placeholder">mily.vn</span> - <span class="placeholder">Computing &amp; Internet</span>
+
+Please wait for the new database, including the changes that we have made, to be loaded by your system.
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</div>
+            <textarea id="tpl-multi-plain" class="copy-plain-src" readonly>Dear [Name],
+
+Thank you for the inquiry. We have updated the categories of the URLs that you have submitted into the following:
+
+mydrive.effem.com  - Computing & Internet
+eqrco.de - Shopping/Retail
+youtube.com - Youtube
+mily.vn - Computing & Internet
+
+Please wait for the new database, including the changes that we have made, to be loaded by your system.
+We appreciate your cooperation,
+
+NetSTAR Support
+incompass_support@netstar-inc.com</textarea>
+            <div style="margin-top: 10px; font-size: 11px; color: var(--muted); font-family: var(--mono);">// Replace each URL and category row as needed</div>
+          </div>
+        </div>
+
       </div><!-- end templates-grid -->
 
       <div style="margin-top: 20px; display: flex; gap: 10px;">
@@ -1210,18 +1236,119 @@ Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Check
 <div class="toast" id="toast">✓ Copied to clipboard!</div>
 
 <script>
+  // ─── DATE UTILITIES ─────────────────────────────────────────────────────────
+  function getTodayStamp() {
+    const now = new Date();
+    const dd   = String(now.getDate()).padStart(2, '0');
+    const mm   = String(now.getMonth() + 1).padStart(2, '0');
+    const yyyy = now.getFullYear();
+    return dd + mm + yyyy; // DDMMYYYY  e.g. 12032026
+  }
+
+  function getTodayReadable() {
+    const now = new Date();
+    return now.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function initDates() {
+    const stamp = getTodayStamp();
+    const readable = getTodayReadable();
+
+    // Header badge
+    document.getElementById('header-date-display').textContent = stamp + ' — ' + readable;
+
+    // Step 2 date highlights
+    ['s2-added-date','s2-changed-date','s2-retained-date','s2-removed-date'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = stamp;
+    });
+
+    // Step 2 plain-text textareas
+    document.getElementById('s2-added-plain').value =
+`Hi All,
+
+We received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized <sadak.com.au> as <Uncategorized>
+
+http://sadak.com.au
+sadak.com.au (uncat)
+
+⇒Primary: Dining/Gourmet; added
+⇒Tags: Immutable,Disputed; added
+Comment: Priority 1 STANDARD ${stamp} from Microsoft
+-This site is The street food of India.`;
+
+    document.getElementById('s2-changed-plain').value =
+`Hi All,
+
+We received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized com-lihaoyi.github.io as ParkedDomains
+
+http://com-lihaoyi.github.io
+
+com-lihaoyi.github.io
+Primary: Parked Domains; changed
+Tags: CLReviewed,InTheClear; changed
+⇒Primary: Computing & Internet
+⇒Tags: Immutable,Disputed
+Comment: Priority 1 STANDARD ${stamp} from Microsoft
+-This site is Scala programming language.`;
+
+    document.getElementById('s2-retained-plain').value =
+`Hi All,
+
+We received an inquiry from Fortra; CAS-0010792859 Site mis-categorized
+
+http://archive.org/
+
+archive.org
+Primary: Remote Proxies; retained
+Tags: Disputed,Immutable; retained
+Comment: Priority 1 STANDARD ${stamp} from Fortra
+
+-This site is a remote proxy page.`;
+
+    document.getElementById('s2-removed-plain').value =
+`Hi All,
+
+We received an inquiry from Zorus: Miscat
+
+camilastexmex.com
+Primary: Dining/Gourmet; retained
+Tags: CLReviewed,InTheClear; changed
+Security: Suspicious; removed
+⇒Tags: Disputed,Immutable
+Comment: Priority 1 STANDARD ${stamp} from Zorus
+-This site is a Mexican Restaurant.`;
+  }
+
+  function copyTodayDate(btn) {
+    const stamp = getTodayStamp();
+    navigator.clipboard.writeText(stamp).then(() => {
+      btn.textContent = '✓';
+      showToast('Date stamp copied: ' + stamp);
+      setTimeout(() => btn.textContent = '📋', 2000);
+    });
+  }
+
+  // ─── PAGE / TAB NAVIGATION ────────────────────────────────────────────────
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     const btn = document.getElementById('btn-' + id);
     if (btn) btn.classList.add('active');
-    // Also deactivate overview btn if needed
     if (id === 'overview') {
       document.querySelectorAll('.step-btn')[0].classList.add('active');
     }
   }
 
+  function switchTab(name) {
+    document.querySelectorAll('.action-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  // ─── TOAST ────────────────────────────────────────────────────────────────
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = '✓ ' + (msg || 'Copied to clipboard!');
@@ -1229,6 +1356,7 @@ Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Check
     setTimeout(() => t.classList.remove('show'), 2000);
   }
 
+  // ─── COPY HELPERS ─────────────────────────────────────────────────────────
   function copyTemplate(id, btn) {
     const el = document.getElementById(id);
     navigator.clipboard.writeText(el.innerText).then(() => {
@@ -1253,28 +1381,7 @@ Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Check
     });
   }
 
-  function copyField(id) {
-    const el = document.getElementById(id);
-    navigator.clipboard.writeText(el.value).then(() => showToast('URL copied!'));
-  }
-
-  function switchTab(name) {
-    document.querySelectorAll('.action-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-    document.getElementById('panel-' + name).classList.add('active');
-  }
-
-  function highlightAction(el, type) {
-    document.querySelectorAll('.action-card').forEach(c => {
-      c.style.borderColor = 'var(--border)';
-      c.style.background = 'var(--bg)';
-    });
-    el.style.borderColor = 'var(--accent)';
-    el.style.background = 'var(--surface2)';
-    showToast('Action selected: ' + type);
-  }
-
+  // ─── SCREENSHOT ───────────────────────────────────────────────────────────
   function handleFileUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -1314,33 +1421,33 @@ Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Check
     showToast('Case marked as done! 🎉');
     setTimeout(() => showPage('overview'), 500);
   }
- function toggleTheme() {
+
+  // ─── THEME ────────────────────────────────────────────────────────────────
+  function toggleTheme() {
     const body = document.body;
-    const btn = document.getElementById("themeToggle");
-
-    body.classList.toggle("light-mode");
-
-    if (body.classList.contains("light-mode")) {
-      btn.innerText = "☀️ Light Mode";
-      localStorage.setItem("theme", "light");
+    const btn = document.getElementById('themeToggle');
+    body.classList.toggle('light-mode');
+    if (body.classList.contains('light-mode')) {
+      btn.innerText = '☀️ Light Mode';
+      localStorage.setItem('theme', 'light');
     } else {
-      btn.innerText = "🌙 Dark Mode";
-      localStorage.setItem("theme", "dark");
+      btn.innerText = '🌙 Dark Mode';
+      localStorage.setItem('theme', 'dark');
     }
   }
 
-  // Load saved theme on page load
-  window.addEventListener("DOMContentLoaded", function () {
-    const savedTheme = localStorage.getItem("theme");
-    const btn = document.getElementById("themeToggle");
-
-    if (savedTheme === "light") {
-      document.body.classList.add("light-mode");
-      btn.innerText = "☀️ Light Mode";
+  // ─── INIT ─────────────────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', function () {
+    const savedTheme = localStorage.getItem('theme');
+    const btn = document.getElementById('themeToggle');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-mode');
+      btn.innerText = '☀️ Light Mode';
     } else {
-      btn.innerText = "🌙 Dark Mode";
+      btn.innerText = '🌙 Dark Mode';
     }
-  });	
+    initDates(); // populate all date stamps on load
+  });
 </script>
 </body>
 </html>
