@@ -650,8 +650,39 @@ body {
     <button class="step-btn" onclick="showPage('step4')" id="btn-step4">
       <div class="step-num">4</div> Upload to Teams
     </button>
-   <button class="step-btn" onclick="window.open('https://mimecast-wine.vercel.app/', '_blank')" id="btn-step5" style="background: linear-gradient(135deg, #fee2e2, #fecaca); border: 1px solid #ef4444; color: #991b1b;">
-  <div class="step-num" style="background-color: #dc2626; color: #fff; border-radius: 4px; padding: 2px 6px; font-weight: bold; font-size: 11px; letter-spacing: 0.5px;">URGENT</div> Mimecast Inquiry
+  <button 
+  class="step-btn" 
+  onclick="window.open('https://mimecast-wine.vercel.app/', '_blank')" 
+  id="btn-step5" 
+  style="
+    background: linear-gradient(135deg, #1a0000 0%, #3b0a0a 100%);
+    border: 1px solid #b91c1c;
+    border-left: 3px solid #ef4444;
+    color: #fca5a5;
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
+    transition: all 0.2s ease;
+  "
+  onmouseover="this.style.boxShadow='0 0 16px rgba(239,68,68,0.4)'; this.style.borderLeftColor='#ff6b6b';"
+  onmouseout="this.style.boxShadow='0 0 10px rgba(239,68,68,0.15)'; this.style.borderLeftColor='#ef4444';"
+>
+  <div style="
+    background: #dc2626;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 0 6px rgba(220,38,38,0.6);
+    white-space: nowrap;
+  ">⚠ URGENT</div>
+  <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.3px;">Mimecast Inquiry</span>
 </button>
   </aside>
 
