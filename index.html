@@ -923,7 +923,7 @@ Diovic</div>
               <div class="tmsg-line url-line"><span class="url-chip">sadak.com.au</span> <span class="tag tag-yellow" style="font-size:9px;">uncat</span></div>
               <div class="tmsg-gap"></div>
               <div class="tmsg-line">⇒Primary: Dining/Gourmet; <span class="status-chip status-added">added</span></div>
-              <div class="tmsg-line">⇒Tags: Immutable,Disputed; <span class="status-chip status-added">added</span></div>
+              <div class="tmsg-line">⇒Tags: Disputed; <span class="status-chip status-added">added</span></div>
               <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-added-date"></span> from Microsoft</div>
               <div class="tmsg-line">-This site is The street food of India.</div>
             </div>
@@ -955,7 +955,7 @@ Diovic</div>
               <div class="tmsg-line">Primary: Parked Domains; <span class="status-chip status-changed">changed</span></div>
               <div class="tmsg-line">Tags: CLReviewed,InTheClear; <span class="status-chip status-changed">changed</span></div>
               <div class="tmsg-line">⇒Primary: Computing &amp; Internet</div>
-              <div class="tmsg-line">⇒Tags: Immutable,Disputed</div>
+              <div class="tmsg-line">⇒Tags: Disputed</div>
               <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-changed-date"></span> from Microsoft</div>
               <div class="tmsg-line">-This site is Scala programming language.</div>
             </div>
@@ -985,7 +985,7 @@ Diovic</div>
               <div class="tmsg-gap"></div>
               <div class="tmsg-line url-line"><span class="url-chip">archive.org</span></div>
               <div class="tmsg-line">Primary: Remote Proxies; <span class="status-chip status-retained">retained</span></div>
-              <div class="tmsg-line">Tags: Disputed,Immutable; <span class="status-chip status-retained">retained</span></div>
+              <div class="tmsg-line">Tags: Disputed; <span class="status-chip status-retained">retained</span></div>
               <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-retained-date"></span> from Fortra</div>
               <div class="tmsg-gap"></div>
               <div class="tmsg-line">-This site is a remote proxy page.</div>
@@ -1016,7 +1016,7 @@ Diovic</div>
               <div class="tmsg-line">Primary: Dining/Gourmet; <span class="status-chip status-retained">retained</span></div>
               <div class="tmsg-line">Tags: CLReviewed,InTheClear; <span class="status-chip status-changed">changed</span></div>
               <div class="tmsg-line">Security: Suspicious; <span class="status-chip status-removed">removed</span></div>
-              <div class="tmsg-line">⇒Tags: Disputed,Immutable</div>
+              <div class="tmsg-line">⇒Tags: Disputed</div>
               <div class="tmsg-line">Comment: Priority 1 STANDARD <span class="date-highlight" id="s2-removed-date"></span> from Zorus</div>
               <div class="tmsg-line">-This site is a Mexican Restaurant.</div>
             </div>
@@ -1530,7 +1530,7 @@ We received an inquiry from <span class="placeholder">[Client Name e.g. Checkpoi
 <span class="url-chip">http://adnpbs.com</span><br>
 <span class="url-chip">adnpbs.com</span><br><br>
 Primary: <span class="placeholder">[Category]</span>; <span class="status-chip status-retained">retained</span><br>
-⇒ Tags: <span class="placeholder">[Tags e.g. Disputed, Immutable]</span>; <span class="status-chip status-added">added</span><br>
+⇒ Tags: <span class="placeholder">[Tags e.g. Disputed]</span>; <span class="status-chip status-added">added</span><br>
 Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Checkpoint]</span><br>
 - <span class="placeholder">[Brief explanation e.g. This site is a server-to-server proxy.]</span>
           </div>
@@ -1565,7 +1565,7 @@ Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Check
               <span class="url-chip">http://adnpbs.com</span><br>
               <span class="url-chip">adnpbs.com</span><br><br>
               Primary: Remote Proxies; <span class="status-chip status-retained">retained</span><br>
-              ⇒ Tags: Disputed, Immutable; <span class="status-chip status-added">added</span><br>
+              ⇒ Tags: Disputed; <span class="status-chip status-added">added</span><br>
               Comment: Priority 1 STANDARD 11092025 from Checkpoint<br>
               - This site is a server-to-server proxy.
             </div>
@@ -1619,7 +1619,6 @@ Use [Name], [Category], etc. as placeholders."></textarea>
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <!-- ✅ FIX: Added id="save-btn" -->
       <button class="btn-save" id="save-btn" onclick="saveTemplate()">💾 Save Template</button>
     </div>
   </div>
@@ -1633,7 +1632,6 @@ Use [Name], [Category], etc. as placeholders."></textarea>
     <p>This will permanently remove the custom template. This action cannot be undone.</p>
     <div class="actions">
       <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
-      <!-- ✅ FIX: Added id="del-btn" -->
       <button class="btn-confirm-del" id="del-btn" onclick="confirmDelete()">Delete</button>
     </div>
   </div>
@@ -1677,13 +1675,13 @@ function initDates() {
     if (el) el.textContent = stamp;
   });
   document.getElementById('s2-added-plain').value =
-`Hi All,\n\nWe received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized <sadak.com.au> as <Uncategorized>\n\nhttp://sadak.com.au\nsadak.com.au (uncat)\n\n⇒Primary: Dining/Gourmet; added\n⇒Tags: Immutable,Disputed; added\nComment: Priority 1 STANDARD ${stamp} from Microsoft\n-This site is The street food of India.`;
+`Hi All,\n\nWe received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized <sadak.com.au> as <Uncategorized>\n\nhttp://sadak.com.au\nsadak.com.au (uncat)\n\n⇒Primary: Dining/Gourmet; added\n⇒Tags: Disputed; added\nComment: Priority 1 STANDARD ${stamp} from Microsoft\n-This site is The street food of India.`;
   document.getElementById('s2-changed-plain').value =
-`Hi All,\n\nWe received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized com-lihaoyi.github.io as ParkedDomains\n\nhttp://com-lihaoyi.github.io\n\ncom-lihaoyi.github.io\nPrimary: Parked Domains; changed\nTags: CLReviewed,InTheClear; changed\n⇒Primary: Computing & Internet\n⇒Tags: Immutable,Disputed\nComment: Priority 1 STANDARD ${stamp} from Microsoft\n-This site is Scala programming language.`;
+`Hi All,\n\nWe received an inquiry from Microsoft; Re: [Customer Dispute] Miscategorized com-lihaoyi.github.io as ParkedDomains\n\nhttp://com-lihaoyi.github.io\n\ncom-lihaoyi.github.io\nPrimary: Parked Domains; changed\nTags: CLReviewed,InTheClear; changed\n⇒Primary: Computing & Internet\n⇒Tags: Disputed\nComment: Priority 1 STANDARD ${stamp} from Microsoft\n-This site is Scala programming language.`;
   document.getElementById('s2-retained-plain').value =
-`Hi All,\n\nWe received an inquiry from Fortra; CAS-0010792859 Site mis-categorized\n\nhttp://archive.org/\n\narchive.org\nPrimary: Remote Proxies; retained\nTags: Disputed,Immutable; retained\nComment: Priority 1 STANDARD ${stamp} from Fortra\n\n-This site is a remote proxy page.`;
+`Hi All,\n\nWe received an inquiry from Fortra; CAS-0010792859 Site mis-categorized\n\nhttp://archive.org/\n\narchive.org\nPrimary: Remote Proxies; retained\nTags: Disputed; retained\nComment: Priority 1 STANDARD ${stamp} from Fortra\n\n-This site is a remote proxy page.`;
   document.getElementById('s2-removed-plain').value =
-`Hi All,\n\nWe received an inquiry from Zorus: Miscat\n\ncamilastexmex.com\nPrimary: Dining/Gourmet; retained\nTags: CLReviewed,InTheClear; changed\nSecurity: Suspicious; removed\n⇒Tags: Disputed,Immutable\nComment: Priority 1 STANDARD ${stamp} from Zorus\n-This site is a Mexican Restaurant.`;
+`Hi All,\n\nWe received an inquiry from Zorus: Miscat\n\ncamilastexmex.com\nPrimary: Dining/Gourmet; retained\nTags: CLReviewed,InTheClear; changed\nSecurity: Suspicious; removed\n⇒Tags: Disputed\nComment: Priority 1 STANDARD ${stamp} from Zorus\n-This site is a Mexican Restaurant.`;
 }
 function copyTodayDate(btn) {
   const stamp = getTodayStamp();
@@ -1906,7 +1904,6 @@ function closeModal() {
   editingId = null;
 }
 
-// ✅ FIX: getSaveBtn() safely gets the button to avoid null crashes
 function getSaveBtn() { return document.getElementById('save-btn'); }
 function getDelBtn()  { return document.getElementById('del-btn'); }
 
