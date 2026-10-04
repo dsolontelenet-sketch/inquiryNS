@@ -275,7 +275,7 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
-    max-width: 640px;
+    max-width: 720px;
   }
   .teams-body { padding: 18px; }
   .teams-msg {
@@ -497,7 +497,7 @@
     color: var(--muted);
     pointer-events: none;
   }
-  #tpl-search {
+  #tpl-search, #teams-tpl-search {
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -509,11 +509,11 @@
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-  #tpl-search:focus {
+  #tpl-search:focus, #teams-tpl-search:focus {
     border-color: var(--accent2);
     box-shadow: 0 0 0 3px rgba(0,119,255,0.12);
   }
-  #tpl-search-clear {
+  #tpl-search-clear, #teams-tpl-search-clear {
     position: absolute;
     right: 10px;
     top: 50%;
@@ -526,14 +526,14 @@
     display: none;
     padding: 2px 4px;
   }
-  #tpl-search-clear:hover { color: var(--red); }
-  #search-count {
+  #tpl-search-clear:hover, #teams-tpl-search-clear:hover { color: var(--red); }
+  #search-count, #teams-search-count {
     font-size: 12px;
     color: var(--muted);
     font-family: var(--mono);
     white-space: nowrap;
   }
-  #no-search-results {
+  #no-search-results, #teams-no-search-results {
     display: none;
     color: var(--muted);
     font-size: 13px;
@@ -758,6 +758,78 @@
     letter-spacing: 0.5px;
   }
 
+  /* ── LOCKED BUILT-IN TEAMS CARD ── */
+  .locked-badge {
+    font-size: 9px;
+    font-family: var(--mono);
+    background: rgba(255,82,82,0.1);
+    color: var(--red);
+    border: 1px solid rgba(255,82,82,0.3);
+    border-radius: 3px;
+    padding: 2px 7px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .builtin-teams-card {
+    border-color: rgba(255,82,82,0.25);
+  }
+  .builtin-teams-card .card-header {
+    background: rgba(255,82,82,0.04);
+  }
+  .builtin-teams-card:hover {
+    border-color: rgba(255,82,82,0.55);
+  }
+
+  /* ── CONTROL ROW (Priority + Vendor dropdowns) ── */
+  .ctrl-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    align-items: center;
+  }
+  .ctrl-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+  }
+  .ctrl-group label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .ctrl-group select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: var(--mono);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .ctrl-group select:focus { border-color: var(--accent2); }
+
+  /* Highlight for dynamic pieces */
+  .dyn-priority, .dyn-vendor, .dyn-date {
+    color: var(--accent);
+    font-weight: 600;
+    font-family: var(--mono);
+  }
+
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; }
     .sidebar { display: none; }
@@ -801,7 +873,7 @@
       <div class="step-num">3</div> Reply Templates
     </button>
     <button class="step-btn" onclick="showPage('step4')" id="btn-step4">
-      <div class="step-num">4</div> Upload to Teams
+      <div class="step-num">4</div> Post in Teams
     </button>
     <button 
       class="step-btn" 
@@ -834,7 +906,7 @@
         <div class="wf-arrow">→</div>
         <div class="wf-step"><div class="wf-dot" onclick="showPage('step3')">3</div><span class="wf-label">Reply to All</span></div>
         <div class="wf-arrow">→</div>
-        <div class="wf-step"><div class="wf-dot" onclick="showPage('step4')">4</div><span class="wf-label">Upload to Teams</span></div>
+        <div class="wf-step"><div class="wf-dot" onclick="showPage('step4')">4</div><span class="wf-label">Post in Teams</span></div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;">
         <div class="action-card" onclick="showPage('step1')" style="text-align:left;padding:18px;">
@@ -856,9 +928,9 @@
           <div style="margin-top:12px;"><span class="tag tag-green">TEMPLATES</span></div>
         </div>
         <div class="action-card" onclick="showPage('step4')" style="text-align:left;padding:18px;">
-          <div style="font-size:24px;margin-bottom:8px;">📤</div>
-          <div style="font-weight:600;margin-bottom:4px;">Step 4: Teams Upload</div>
-          <div style="font-size:12px;color:var(--muted);">Log the case in Teams with details + screenshot.</div>
+          <div style="font-size:24px;margin-bottom:8px;">💬</div>
+          <div style="font-weight:600;margin-bottom:4px;">Step 4: Post in Teams</div>
+          <div style="font-size:12px;color:var(--muted);">Use the TW Shield templates to post in Teams.</div>
           <div style="margin-top:12px;"><span class="tag tag-red">TEAMS</span></div>
         </div>
       </div>
@@ -1509,70 +1581,139 @@ Cebu team</textarea>
 
       <div style="margin-top:24px;display:flex;gap:10px;">
         <button class="upload-btn" onclick="showPage('step2')" style="padding:10px 20px;border-radius:8px;font-family:var(--sans);font-size:13px;">← Back</button>
-        <button class="upload-btn" onclick="showPage('step4')" style="background:var(--accent2);border-color:var(--accent2);color:white;padding:10px 20px;border-radius:8px;font-family:var(--sans);font-size:13px;">Next: Upload to Teams →</button>
+        <button class="upload-btn" onclick="showPage('step4')" style="background:var(--accent2);border-color:var(--accent2);color:white;padding:10px 20px;border-radius:8px;font-family:var(--sans);font-size:13px;">Next: Post in Teams →</button>
       </div>
     </div>
 
-    <!-- STEP 4 -->
+    <!-- STEP 4 — POST IN TEAMS (with locked built-in + custom CRUD) -->
     <div class="page" id="page-step4">
       <div class="page-header">
-        <div class="page-icon" style="background:rgba(255,82,82,0.15);">📤</div>
-        <div><h1>Step 4 — Upload to Teams</h1><p>Post inquiry log in the URL Support channel with screenshot</p></div>
+        <div class="page-icon" style="background:rgba(255,82,82,0.15);">💬</div>
+        <div><h1>Step 4 — Post in Teams</h1><p>Copy the Shield templates into Teams. Priority & vendor auto-fill and the date refreshes daily.</p></div>
       </div>
-      <div class="teams-card">
-        <div class="card-header">
-          <div class="card-title">💬 Teams Message Template <span class="tag tag-red">TEAMS</span></div>
-          <button class="copy-btn" onclick="copyTemplateById('teams-template', this)">📋 Copy</button>
+
+      <!-- Manager bar -->
+      <div class="tpl-manager-bar">
+        <div>
+          <h2>💬 Teams Template Library</h2>
+          <div class="sub">2 built-in locked templates. Add, edit, or delete your own custom Teams templates below.</div>
         </div>
-        <div class="teams-body">
-          <div id="teams-template" class="teams-msg">Hi All,<br><br>
-We received an inquiry from <span class="placeholder">[Client Name e.g. Checkpoint]</span>; <span class="placeholder">[Request Type e.g. Categorization change request]</span><br><br>
-<span class="url-chip">http://adnpbs.com</span><br>
-<span class="url-chip">adnpbs.com</span><br><br>
-Primary: <span class="placeholder">[Category]</span>; <span class="status-chip status-retained">retained</span><br>
-⇒ Tags: <span class="placeholder">[Tags e.g. Disputed]</span>; <span class="status-chip status-added">added</span><br>
-Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Checkpoint]</span><br>
-- <span class="placeholder">[Brief explanation e.g. This site is a server-to-server proxy.]</span>
-          </div>
-          <hr class="section-sep">
-          <div style="font-size:12px;color:var(--muted);font-family:var(--mono);margin-bottom:10px;">// SCREENSHOT ATTACHMENT</div>
-          <div class="screenshot-placeholder" id="screenshot-zone" ondrop="dropHandler(event)" ondragover="dragOver(event)">
-            <span style="font-size:28px;">📸</span>
-            <span>Drag & drop screenshot here or click to upload</span>
-            <label class="upload-btn">
-              Choose File
-              <input type="file" accept="image/*" onchange="handleFileUpload(event)">
-            </label>
-            <span id="file-name" style="font-size:11px;color:var(--accent);font-family:var(--mono);"></span>
-          </div>
-          <div id="screenshot-preview" style="display:none;margin-top:10px;">
-            <img id="preview-img" style="max-width:100%;border-radius:8px;border:1px solid var(--border);">
-            <button onclick="clearScreenshot()" style="margin-top:8px;background:none;border:1px solid var(--red);color:var(--red);padding:4px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--mono);">✕ Remove</button>
-          </div>
-        </div>
+        <button class="btn-add-tpl" onclick="openTeamsAddModal()">＋ Add New Teams Template</button>
       </div>
-      <div style="margin-top:20px;">
-        <div style="font-size:12px;color:var(--muted);font-family:var(--mono);margin-bottom:10px;">// EXAMPLE ENTRY (Reference)</div>
-        <div class="teams-card">
+
+      <!-- Search bar -->
+      <div class="tpl-search-wrap">
+        <div class="tpl-search-input-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="teams-tpl-search" placeholder="Search Teams templates by title, keyword, or tag..." oninput="searchTeamsTemplates()">
+          <button id="teams-tpl-search-clear" onclick="clearTeamsTplSearch()" title="Clear search">✕</button>
+        </div>
+        <span id="teams-search-count"></span>
+      </div>
+      <div id="teams-no-search-results">🔍 No Teams templates match your search. Try a different keyword.</div>
+
+      <!-- Built-in locked Teams templates -->
+      <div style="font-size:11px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;">🔒 Built-in Teams Templates</div>
+      <div class="templates-grid" id="builtin-teams-grid">
+
+        <!-- BUILT-IN 1: Shield DOES NOT Match -->
+        <div class="template-card builtin-teams-card" data-teams-builtin="mismatch">
           <div class="card-header">
-            <div class="card-title" style="color:var(--muted);">📎 Sample Teams Post</div>
-            <span class="tag tag-blue">EXAMPLE</span>
-          </div>
-          <div class="teams-body">
-            <div class="teams-msg">
-              Hi All,<br><br>
-              We received an inquiry from <strong>Checkpoint</strong>; Categorization change request<br><br>
-              <span class="url-chip">http://adnpbs.com</span><br>
-              <span class="url-chip">adnpbs.com</span><br><br>
-              Primary: Remote Proxies; <span class="status-chip status-retained">retained</span><br>
-              ⇒ Tags: Disputed; <span class="status-chip status-added">added</span><br>
-              Comment: Priority 1 STANDARD 11092025 from Checkpoint<br>
-              - This site is a server-to-server proxy.
+            <div class="card-title">
+              ⚠️ Shield Result Does NOT Match Request
+              <span class="tag tag-red">MISMATCH</span>
+              <span class="locked-badge">🔒 Locked</span>
+            </div>
+            <div class="card-actions">
+              <button class="copy-btn" onclick="copyTeamsBuiltin('mismatch', this)">📋 Copy</button>
             </div>
           </div>
+          <div class="template-body">
+            <!-- Priority / Vendor controls -->
+            <div class="ctrl-row">
+              <div class="ctrl-group">
+                <label for="prio-mismatch">Priority</label>
+                <select id="prio-mismatch" onchange="updateBuiltinTeams()">
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+              <div class="ctrl-group">
+                <label for="vendor-mismatch">Vendor</label>
+                <select id="vendor-mismatch" onchange="updateBuiltinTeams()">
+                  <option value="TW" selected>TW</option>
+                  <option value="SO">SO</option>
+                  <option value="OS">OS</option>
+                  <option value="IS">IS</option>
+                  <option value="AZ">AZ</option>
+                  <option value="FS">FS</option>
+                  <option value="JN">JN</option>
+                  <option value="HN">HN</option>
+                  <option value="ZO">ZO</option>
+                </select>
+              </div>
+            </div>
+            <!-- Visible rendered text -->
+            <div class="email-content" id="builtin-mismatch-content" style="margin-top:12px;"></div>
+          </div>
+        </div>
+
+        <!-- BUILT-IN 2: Shield Matches -->
+        <div class="template-card builtin-teams-card" data-teams-builtin="match">
+          <div class="card-header">
+            <div class="card-title">
+              ✅ Shield Result Matches Request
+              <span class="tag tag-green">MATCH</span>
+              <span class="locked-badge">🔒 Locked</span>
+            </div>
+            <div class="card-actions">
+              <button class="copy-btn" onclick="copyTeamsBuiltin('match', this)">📋 Copy</button>
+            </div>
+          </div>
+          <div class="template-body">
+            <div class="ctrl-row">
+              <div class="ctrl-group">
+                <label for="prio-match">Priority</label>
+                <select id="prio-match" onchange="updateBuiltinTeams()">
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+              <div class="ctrl-group">
+                <label for="vendor-match">Vendor</label>
+                <select id="vendor-match" onchange="updateBuiltinTeams()">
+                  <option value="TW" selected>TW</option>
+                  <option value="SO">SO</option>
+                  <option value="OS">OS</option>
+                  <option value="IS">IS</option>
+                  <option value="AZ">AZ</option>
+                  <option value="FS">FS</option>
+                  <option value="JN">JN</option>
+                  <option value="HN">HN</option>
+                  <option value="ZO">ZO</option>
+                </select>
+              </div>
+            </div>
+            <div class="email-content" id="builtin-match-content" style="margin-top:12px;"></div>
+          </div>
+        </div>
+
+      </div><!-- end built-in teams grid -->
+
+      <!-- Custom Teams templates -->
+      <div style="margin-top:36px;">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;">✨ Custom Teams Templates</div>
+        <div class="templates-grid" id="custom-teams-grid"></div>
+        <div id="no-custom-teams-msg" style="color:var(--muted);font-size:13px;padding:24px;background:var(--surface);border:1px dashed var(--border);border-radius:10px;text-align:center;">
+          No custom Teams templates yet. Click <strong>+ Add New Teams Template</strong> to create one.
         </div>
       </div>
-      <div style="margin-top:20px;display:flex;gap:10px;">
+
+      <div style="margin-top:24px;display:flex;gap:10px;">
         <button class="upload-btn" onclick="showPage('step3')" style="padding:10px 20px;border-radius:8px;font-family:var(--sans);font-size:13px;">← Back</button>
         <button class="upload-btn" onclick="markDone()" style="background:var(--green);border-color:var(--green);color:#0a1a0a;font-weight:600;padding:10px 20px;border-radius:8px;font-family:var(--sans);font-size:13px;">✔ Mark as Done</button>
       </div>
@@ -1584,7 +1725,7 @@ Comment: <span class="placeholder">[e.g. Priority 1 STANDARD 11092025 from Check
 <!-- Toast -->
 <div class="toast" id="toast">✓ Copied to clipboard!</div>
 
-<!-- ADD / EDIT MODAL -->
+<!-- ADD / EDIT MODAL (Step 3) -->
 <div class="modal-overlay" id="tpl-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -1624,6 +1765,46 @@ Use [Name], [Category], etc. as placeholders."></textarea>
   </div>
 </div>
 
+<!-- ADD / EDIT MODAL (Step 4 — Teams) -->
+<div class="modal-overlay" id="teams-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeTeamsModal()">✕</button>
+    <h3 id="teams-modal-title">＋ Add New Teams Template</h3>
+    <div class="form-field">
+      <label>Template Title</label>
+      <input type="text" id="teams-modal-title-input" placeholder="e.g. 💬 Escalation Reply" maxlength="80">
+    </div>
+    <div class="form-field">
+      <label>Tag Color</label>
+      <select id="teams-modal-tag">
+        <option value="green">🟢 Green</option>
+        <option value="blue">🔵 Blue</option>
+        <option value="yellow">🟡 Yellow</option>
+        <option value="red">🔴 Red</option>
+        <option value="purple">🟣 Purple</option>
+        <option value="custom">✨ Custom</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Tag Text (short label)</label>
+      <input type="text" id="teams-modal-tag-text" placeholder="e.g. UPDATE" maxlength="20">
+    </div>
+    <div class="form-field">
+      <label>Template Body</label>
+      <textarea id="teams-modal-body" placeholder="Type your Teams template here...
+Use {priority}, {vendor}, {date} for auto-filled values (YYYYMMDD)."></textarea>
+    </div>
+    <div class="form-field">
+      <label>Notes / Hint (optional)</label>
+      <input type="text" id="teams-modal-notes" placeholder="e.g. // Replace placeholders as needed" maxlength="120">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeTeamsModal()">Cancel</button>
+      <button class="btn-save" id="teams-save-btn" onclick="saveTeamsTemplate()">💾 Save Teams Template</button>
+    </div>
+  </div>
+</div>
+
 <!-- DELETE CONFIRM -->
 <div class="confirm-overlay" id="confirm-del">
   <div class="confirm-box">
@@ -1655,6 +1836,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const TPL_COLLECTION = 'custom_templates';
+const TEAMS_TPL_COLLECTION = 'custom_teams_templates';
 
 // ── DATE ──────────────────────────────────────────────────────────────────────
 function getTodayStamp() {
@@ -1664,9 +1846,93 @@ function getTodayStamp() {
   const yyyy = now.getFullYear();
   return dd+mm+yyyy;
 }
+// YYYYMMDD for Teams templates
+function getTodayCompact() {
+  const now = new Date();
+  const dd   = String(now.getDate()).padStart(2,'0');
+  const mm   = String(now.getMonth()+1).padStart(2,'0');
+  const yyyy = now.getFullYear();
+  return yyyy+mm+dd;
+}
 function getTodayReadable() {
   return new Date().toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
 }
+
+// ════════════════════════════════════════════════════════════════════
+// BUILT-IN TEAMS TEMPLATES (Locked — Priority/Vendor/Date auto-fill)
+// ════════════════════════════════════════════════════════════════════
+function buildBuiltinTeamsText(kind) {
+  const prio   = document.getElementById(kind === 'mismatch' ? 'prio-mismatch' : 'prio-match').value;
+  const vendor = document.getElementById(kind === 'mismatch' ? 'vendor-mismatch' : 'vendor-match').value;
+  const date   = getTodayCompact();
+
+  if (kind === 'mismatch') {
+    return `Hi 松村 千代 (Chiyo Matsumura),
+
+We received a Dispute Priority ${prio} ${vendor} accepted at ${date}
+
+sexysagirls.za.com
+
+Domain: sexysagirls.za.com
+Requested Category: 20066(Phishing Sites)
+Primary: Dating; change 
+Tags: CLReviewed; changed
+Security: Phishing Sites; added
+⇒Primary: Miscellaneous
+⇒Tags: Disputed
+Shield result: Safe
+Comment: Disputes Priority ${prio} ${vendor} accepted at ${date}
+
+- The Shield result does not match the requested category.
+- The category was updated according to the customer's request.
+(Netstar screenshot here)`;
+  } else {
+    return `Hi all,
+
+We received a Dispute Priority ${prio} ${vendor} accepted at ${date}
+
+sexysagirls.za.com
+
+Domain: sexysagirls.za.com
+Requested Category: 20066(Phishing Sites)
+Primary: Dating; change 
+Tags: CLReviewed; changed
+Security: Phishing Sites; added
+⇒Primary: Miscellaneous
+⇒Tags: Disputed
+Shield result: Phishing Sites
+Comment: Disputes Priority ${prio} ${vendor} accepted at ${date}
+
+- The Shield result matches the request.
+- The category was updated according to the customer's request.
+(Netstar screenshot here)`;
+  }
+}
+
+// Renders the built-in Teams template into its visible container
+function renderBuiltinTeamsCard(kind) {
+  const el = document.getElementById(kind === 'mismatch' ? 'builtin-mismatch-content' : 'builtin-match-content');
+  if (!el) return;
+  el.textContent = buildBuiltinTeamsText(kind);
+}
+
+function updateBuiltinTeams() {
+  renderBuiltinTeamsCard('mismatch');
+  renderBuiltinTeamsCard('match');
+}
+
+// Copy handler for built-in Teams templates
+function copyTeamsBuiltin(kind, btn) {
+  const text = buildBuiltinTeamsText(kind);
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    showToast('Teams template copied!');
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── INIT DATES ────────────────────────────────────────────────────────────────
 function initDates() {
   const stamp = getTodayStamp();
   document.getElementById('header-date-display').textContent = stamp + ' — ' + getTodayReadable();
@@ -1681,8 +1947,12 @@ function initDates() {
   document.getElementById('s2-retained-plain').value =
 `Hi All,\n\nWe received an inquiry from Fortra; CAS-0010792859 Site mis-categorized\n\nhttp://archive.org/\n\narchive.org\nPrimary: Remote Proxies; retained\nTags: Disputed; retained\nComment: Priority 1 STANDARD ${stamp} from Fortra\n\n-This site is a remote proxy page.`;
   document.getElementById('s2-removed-plain').value =
-`Hi All,\n\nWe received an inquiry from Zorus: Miscat\n\ncamilastexmex.com\nPrimary: Dining/Gourmet; retained\nTags: CLReviewed,InTheClear; changed\nSecurity: Suspicious; removed\n⇒Tags: Disputed\nComment: Priority 1 STANDARD ${stamp} from Zorus\n-This site is a Mexican Restaurant.`;
+`Hi All,\n\nWe received an inquiry from Zorus: Miscat\n\ncamilastexm.com\nPrimary: Dining/Gourmet; retained\nTags: CLReviewed,InTheClear; changed\nSecurity: Suspicious; removed\n⇒Tags: Disputed\nComment: Priority 1 STANDARD ${stamp} from Zorus\n-This site is a Mexican Restaurant.`;
+
+  // Render built-in Teams templates (auto-dated)
+  updateBuiltinTeams();
 }
+
 function copyTodayDate(btn) {
   const stamp = getTodayStamp();
   navigator.clipboard.writeText(stamp).then(()=>{
@@ -1700,6 +1970,8 @@ function showPage(id) {
   const btn = document.getElementById('btn-'+id);
   if (btn) btn.classList.add('active');
   if (id==='overview') document.querySelectorAll('.step-btn')[0].classList.add('active');
+  // Re-render Teams templates when entering step4
+  if (id === 'step4') updateBuiltinTeams();
 }
 function switchTab(name) {
   document.querySelectorAll('.action-tab').forEach(t=>t.classList.remove('active'));
@@ -1738,37 +2010,6 @@ function copyPlain(id,btn) {
   });
 }
 
-// ── SCREENSHOT ────────────────────────────────────────────────────────────────
-function handleFileUpload(e) {
-  const file=e.target.files[0]; if(!file)return;
-  document.getElementById('file-name').textContent=file.name;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    document.getElementById('preview-img').src=ev.target.result;
-    document.getElementById('screenshot-preview').style.display='block';
-    document.getElementById('screenshot-zone').style.display='none';
-  };
-  reader.readAsDataURL(file);
-}
-function clearScreenshot() {
-  document.getElementById('screenshot-preview').style.display='none';
-  document.getElementById('screenshot-zone').style.display='flex';
-  document.getElementById('file-name').textContent='';
-  document.getElementById('preview-img').src='';
-}
-function dropHandler(e) {
-  e.preventDefault();
-  const file=e.dataTransfer.files[0];
-  if(!file||!file.type.startsWith('image/'))return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    document.getElementById('preview-img').src=ev.target.result;
-    document.getElementById('screenshot-preview').style.display='block';
-    document.getElementById('screenshot-zone').style.display='none';
-  };
-  reader.readAsDataURL(file);
-}
-function dragOver(e){e.preventDefault();}
 function markDone(){showToast('Case marked as done! 🎉');setTimeout(()=>showPage('overview'),500);}
 
 // ── THEME ─────────────────────────────────────────────────────────────────────
@@ -1781,18 +2022,18 @@ function toggleTheme() {
 }
 
 // ════════════════════════════════════════════════════════════════════
-// TEMPLATE MANAGER — FIRESTORE CRUD
+// STEP 3 — TEMPLATE MANAGER (FIRESTORE CRUD)
 // ════════════════════════════════════════════════════════════════════
 let customTemplates = [];
 let editingId  = null;
 let deletingId = null;
+let deletingCollection = TPL_COLLECTION;
 
 const TAG_MAP = {
   green:'tag-green', blue:'tag-blue', yellow:'tag-yellow',
   red:'tag-red', purple:'tag-purple', custom:'tag-custom'
 };
 
-// ── REAL-TIME LISTENER ────────────────────────────────────────────
 function startFirestoreListener() {
   db.collection(TPL_COLLECTION)
     .orderBy('createdAt', 'asc')
@@ -1808,12 +2049,10 @@ function startFirestoreListener() {
     );
 }
 
-// ── RENDER ────────────────────────────────────────────────────────
 function escHtml(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── DATE ADDED FORMATTER ──────────────────────────────────────────
 function formatAddedDate(ts) {
   if (!ts) return 'Just now';
   const d = typeof ts.toDate === 'function' ? ts.toDate() : new Date(ts);
@@ -1845,7 +2084,7 @@ function renderCustomTemplates() {
         <div class="card-actions">
           <button class="copy-btn" onclick="copyCustomTpl('${tpl.id}',this)">📋 Copy</button>
           <button class="btn-icon" title="Edit"   onclick="openEditModal('${tpl.id}')">✏️</button>
-          <button class="btn-icon danger" title="Delete" onclick="openConfirm('${tpl.id}')">🗑️</button>
+          <button class="btn-icon danger" title="Delete" onclick="openConfirm('${tpl.id}','${TPL_COLLECTION}')">🗑️</button>
         </div>
       </div>
       <div class="template-body">
@@ -1869,7 +2108,6 @@ function copyCustomTpl(id, btn) {
   });
 }
 
-// ── MODAL: ADD ────────────────────────────────────────────────────
 function openAddModal() {
   editingId = null;
   document.getElementById('modal-title').textContent = '＋ Add New Template';
@@ -1883,7 +2121,6 @@ function openAddModal() {
   setTimeout(()=>document.getElementById('modal-tpl-title').focus(),100);
 }
 
-// ── MODAL: EDIT ───────────────────────────────────────────────────
 function openEditModal(id) {
   const tpl = customTemplates.find(t=>t.id===id);
   if (!tpl) return;
@@ -1903,10 +2140,8 @@ function closeModal() {
   document.getElementById('tpl-modal').classList.remove('open');
   editingId = null;
 }
-
 function getSaveBtn() { return document.getElementById('save-btn'); }
 function getDelBtn()  { return document.getElementById('del-btn'); }
-
 function setSaveLoading(loading) {
   const btn = getSaveBtn();
   if (!btn) return;
@@ -1914,7 +2149,6 @@ function setSaveLoading(loading) {
   btn.textContent = loading ? '⏳ Saving…' : '💾 Save Template';
 }
 
-// ── SAVE (ADD or UPDATE) to Firestore ─────────────────────────────
 async function saveTemplate() {
   const title    = document.getElementById('modal-tpl-title').value.trim();
   const tagColor = document.getElementById('modal-tpl-tag').value;
@@ -1949,9 +2183,10 @@ async function saveTemplate() {
   }
 }
 
-// ── DELETE ────────────────────────────────────────────────────────
-function openConfirm(id) {
+// ── DELETE (shared for both collections) ──
+function openConfirm(id, collection) {
   deletingId = id;
+  deletingCollection = collection || TPL_COLLECTION;
   setDeleteLoading(false);
   document.getElementById('confirm-del').classList.add('open');
 }
@@ -1969,7 +2204,7 @@ async function confirmDelete() {
   if (!deletingId) return;
   setDeleteLoading(true);
   try {
-    await db.collection(TPL_COLLECTION).doc(deletingId).delete();
+    await db.collection(deletingCollection).doc(deletingId).delete();
     showToast('Template deleted.');
     closeConfirm();
   } catch(err) {
@@ -1980,11 +2215,11 @@ async function confirmDelete() {
 }
 
 // ════════════════════════════════════════════════════════════════════
-// TEMPLATE SEARCH
+// STEP 3 — TEMPLATE SEARCH
 // ════════════════════════════════════════════════════════════════════
 function addBuiltinDateBadges() {
   document.querySelectorAll('#builtin-templates-grid .template-card .card-title').forEach(title => {
-    if (title.querySelector('.date-added-badge')) return; // avoid duplicates
+    if (title.querySelector('.date-added-badge')) return;
     const badge = document.createElement('span');
     badge.className = 'date-added-badge';
     badge.title = 'Built-in template — included by default in this tool';
@@ -2019,7 +2254,6 @@ function searchTemplates() {
   const noResults = document.getElementById('no-search-results');
   noResults.style.display = (q && visibleCount === 0) ? 'block' : 'none';
 
-  // Section labels + custom empty state stay accurate while searching
   const noCustomMsg = document.getElementById('no-custom-msg');
   if (customTemplates.length === 0) {
     noCustomMsg.style.display = q ? 'none' : 'block';
@@ -2033,10 +2267,212 @@ function clearTplSearch() {
   input.focus();
 }
 
+// ════════════════════════════════════════════════════════════════════
+// STEP 4 — CUSTOM TEAMS TEMPLATE MANAGER
+// ════════════════════════════════════════════════════════════════════
+let customTeamsTemplates = [];
+let editingTeamsId = null;
+
+function startTeamsFirestoreListener() {
+  db.collection(TEAMS_TPL_COLLECTION)
+    .orderBy('createdAt', 'asc')
+    .onSnapshot(
+      snapshot => {
+        customTeamsTemplates = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderCustomTeamsTemplates();
+      },
+      err => {
+        console.error('Teams Firestore listener error:', err);
+        showToast('Teams Firestore error: ' + err.message, 'err');
+      }
+    );
+}
+
+// Replace {priority}, {vendor}, {date} in custom Teams bodies
+function applyTeamsPlaceholders(body) {
+  const prio   = document.getElementById('prio-match').value;
+  const vendor = document.getElementById('vendor-match').value;
+  const date   = getTodayCompact();
+  return String(body || '')
+    .replace(/\{priority\}/g, prio)
+    .replace(/\{vendor\}/g, vendor)
+    .replace(/\{date\}/g, date);
+}
+
+function renderCustomTeamsTemplates() {
+  const grid  = document.getElementById('custom-teams-grid');
+  const noMsg = document.getElementById('no-custom-teams-msg');
+  grid.innerHTML = '';
+  if (customTeamsTemplates.length === 0) {
+    noMsg.style.display = 'block';
+    buildTeamsSearchIndex();
+    searchTeamsTemplates();
+    return;
+  }
+  noMsg.style.display = 'none';
+  customTeamsTemplates.forEach(tpl => {
+    const tagClass = TAG_MAP[tpl.tagColor] || 'tag-custom';
+    const addedLabel = formatAddedDate(tpl.createdAt);
+    const rendered = applyTeamsPlaceholders(tpl.body);
+    const card = document.createElement('div');
+    card.className = 'template-card';
+    card.style.borderColor = 'rgba(0,230,118,0.3)';
+    card.dataset.id = tpl.id;
+    card.innerHTML = `
+      <div class="card-header" style="background:rgba(0,230,118,0.04);">
+        <div class="card-title">
+          ${escHtml(tpl.title)}
+          <span class="tag ${tagClass}">${escHtml(tpl.tagText||'CUSTOM')}</span>
+          <span class="user-tpl-badge">custom</span>
+          <span class="date-added-badge custom-date" title="Date this template was added">📅 Added ${addedLabel}</span>
+        </div>
+        <div class="card-actions">
+          <button class="copy-btn" onclick="copyCustomTeamsTpl('${tpl.id}',this)">📋 Copy</button>
+          <button class="btn-icon" title="Edit"   onclick="openTeamsEditModal('${tpl.id}')">✏️</button>
+          <button class="btn-icon danger" title="Delete" onclick="openConfirm('${tpl.id}','${TEAMS_TPL_COLLECTION}')">🗑️</button>
+        </div>
+      </div>
+      <div class="template-body">
+        <div class="email-content" style="white-space:pre-wrap;">${escHtml(rendered)}</div>
+        ${tpl.notes?`<div style="margin-top:10px;font-size:11px;color:var(--muted);font-family:var(--mono);">${escHtml(tpl.notes)}</div>`:''}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  buildTeamsSearchIndex();
+  searchTeamsTemplates();
+}
+
+function copyCustomTeamsTpl(id, btn) {
+  const tpl = customTeamsTemplates.find(t=>t.id===id);
+  if (!tpl) return;
+  const rendered = applyTeamsPlaceholders(tpl.body);
+  navigator.clipboard.writeText(rendered).then(()=>{
+    btn.textContent='✓ Copied!'; btn.classList.add('copied');
+    showToast('Teams template copied!');
+    setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);
+  });
+}
+
+function openTeamsAddModal() {
+  editingTeamsId = null;
+  document.getElementById('teams-modal-title').textContent = '＋ Add New Teams Template';
+  document.getElementById('teams-modal-title-input').value = '';
+  document.getElementById('teams-modal-tag').value         = 'custom';
+  document.getElementById('teams-modal-tag-text').value    = '';
+  document.getElementById('teams-modal-body').value        = '';
+  document.getElementById('teams-modal-notes').value       = '';
+  setTeamsSaveLoading(false);
+  document.getElementById('teams-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('teams-modal-title-input').focus(),100);
+}
+
+function openTeamsEditModal(id) {
+  const tpl = customTeamsTemplates.find(t=>t.id===id);
+  if (!tpl) return;
+  editingTeamsId = id;
+  document.getElementById('teams-modal-title').textContent = '✏️ Edit Teams Template';
+  document.getElementById('teams-modal-title-input').value = tpl.title;
+  document.getElementById('teams-modal-tag').value         = tpl.tagColor||'custom';
+  document.getElementById('teams-modal-tag-text').value    = tpl.tagText||'';
+  document.getElementById('teams-modal-body').value        = tpl.body;
+  document.getElementById('teams-modal-notes').value       = tpl.notes||'';
+  setTeamsSaveLoading(false);
+  document.getElementById('teams-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('teams-modal-title-input').focus(),100);
+}
+
+function closeTeamsModal() {
+  document.getElementById('teams-modal').classList.remove('open');
+  editingTeamsId = null;
+}
+
+function setTeamsSaveLoading(loading) {
+  const btn = document.getElementById('teams-save-btn');
+  if (!btn) return;
+  btn.disabled    = loading;
+  btn.textContent = loading ? '⏳ Saving…' : '💾 Save Teams Template';
+}
+
+async function saveTeamsTemplate() {
+  const title    = document.getElementById('teams-modal-title-input').value.trim();
+  const tagColor = document.getElementById('teams-modal-tag').value;
+  const tagText  = (document.getElementById('teams-modal-tag-text').value.trim().toUpperCase()) || 'CUSTOM';
+  const body     = document.getElementById('teams-modal-body').value.trim();
+  const notes    = document.getElementById('teams-modal-notes').value.trim();
+
+  if (!title) { document.getElementById('teams-modal-title-input').focus(); showToast('Please enter a title','err'); return; }
+  if (!body)  { document.getElementById('teams-modal-body').focus();         showToast('Template body cannot be empty','err'); return; }
+
+  setTeamsSaveLoading(true);
+  try {
+    if (editingTeamsId) {
+      await db.collection(TEAMS_TPL_COLLECTION).doc(editingTeamsId).update({
+        title, tagColor, tagText, body, notes,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      showToast('Teams template updated!');
+    } else {
+      await db.collection(TEAMS_TPL_COLLECTION).add({
+        title, tagColor, tagText, body, notes,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      showToast('Teams template saved!');
+    }
+    closeTeamsModal();
+  } catch(err) {
+    console.error('Teams Firestore save error:', err);
+    showToast('Save failed: ' + err.message, 'err');
+    setTeamsSaveLoading(false);
+  }
+}
+
+// ── STEP 4 SEARCH ──
+function buildTeamsSearchIndex() {
+  document.querySelectorAll('#custom-teams-grid .template-card').forEach(card => {
+    card.dataset.search = card.innerText.toLowerCase();
+  });
+}
+function searchTeamsTemplates() {
+  const input = document.getElementById('teams-tpl-search');
+  const q = input.value.trim().toLowerCase();
+  const clearBtn = document.getElementById('teams-tpl-search-clear');
+  clearBtn.style.display = q ? 'block' : 'none';
+
+  const cards = document.querySelectorAll('#custom-teams-grid .template-card');
+  let visibleCount = 0;
+  cards.forEach(card => {
+    const match = !q || (card.dataset.search||'').includes(q);
+    card.style.display = match ? '' : 'none';
+    if (match) visibleCount++;
+  });
+
+  const countEl = document.getElementById('teams-search-count');
+  countEl.textContent = q ? `${visibleCount} result${visibleCount!==1?'s':''} found` : '';
+
+  const noResults = document.getElementById('teams-no-search-results');
+  noResults.style.display = (q && visibleCount === 0) ? 'block' : 'none';
+
+  const noCustomMsg = document.getElementById('no-custom-teams-msg');
+  if (customTeamsTemplates.length === 0) {
+    noCustomMsg.style.display = q ? 'none' : 'block';
+  }
+}
+function clearTeamsTplSearch() {
+  const input = document.getElementById('teams-tpl-search');
+  input.value = '';
+  searchTeamsTemplates();
+  input.focus();
+}
+
 // ── CLOSE OVERLAYS ────────────────────────────────────────────────
 document.getElementById('tpl-modal').addEventListener('click',  e=>{ if(e.target===e.currentTarget) closeModal(); });
+document.getElementById('teams-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeTeamsModal(); });
 document.getElementById('confirm-del').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeConfirm(); });
-document.addEventListener('keydown', e=>{ if(e.key==='Escape'){closeModal();closeConfirm();} });
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){ closeModal(); closeTeamsModal(); closeConfirm(); }
+});
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function(){
@@ -2048,6 +2484,10 @@ window.addEventListener('DOMContentLoaded', function(){
   addBuiltinDateBadges();
   buildTplSearchIndex();
   startFirestoreListener();
+  startTeamsFirestoreListener();
+
+  // Refresh built-in Teams template dates every minute
+  setInterval(updateBuiltinTeams, 60 * 1000);
 });
 </script>
 </body>
